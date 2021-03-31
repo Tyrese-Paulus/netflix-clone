@@ -1,7 +1,26 @@
 import React from 'react';
 import './Banner.css';
+import axios from './axios';
+import requests from './Requests';
 
 function Banner() {
+
+    const [ movie, setMovie ] = React.useState([])
+
+    React.useEffect(() => {
+        async function fetchData() {
+            const request = await axios.get(requests.fetchNetflixOriginals);
+            setMovie(
+                request.data.results[
+                    Math.floor(Math.random() * request.data.results.length - 1)
+                ]
+            )
+            return request;
+        };
+        fetchData()
+    }, [])
+
+    console.log(movie);
 
     function truncate(string, n){
         return (
@@ -15,7 +34,7 @@ function Banner() {
             className="banner" 
             style={{
                 backgroundSize: "cover",
-                backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASIAAACuCAMAAAClZfCTAAAAA1BMVEUAAACnej3aAAAASElEQVR4nO3BMQEAAADCoPVPbQhfoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeA8XKAAFZcBBuAAAAAElFTkSuQmCC")`,
+                backgroundImage: `url("https://image.tmdb.org/t/p/original/${movie?.backdrop_path}")`,
                 backgroundPosition: "center center"
             }}
 
@@ -23,7 +42,7 @@ function Banner() {
             <div className="banner__contents">
 
                 <h1 className="banner__title">
-                    movie name
+                    {movie?.title || movie?.name || movie?.original_name}
                 </h1>
 
                 <div className="banner__buttons">
@@ -37,6 +56,7 @@ function Banner() {
             </div>
 
             <div className="banner--fadeBottom" />
+            
         </header>
     )
 }
