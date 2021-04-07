@@ -13,7 +13,7 @@ function Banner() {
             setMovie(
                 request.data.results[
                     Math.floor(Math.random() * request.data.results.length - 1)
-                ]
+                ] 
             )
             return request;
         };
@@ -51,7 +51,7 @@ function Banner() {
                 </div>
 
                 <h1 className="banner__description">
-                    {truncate(`this is a test this is a test this is a test this is a test this is a test this is a test this is a test this is a test this is a test this is a test this is a test this is a test this is a test this is a test`, 150)}
+                    {truncate(`${movie?.overview}`, 150)}
                 </h1>
             </div>
 
